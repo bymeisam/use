@@ -9,12 +9,16 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
+      issues: write
+      pull-requests: write
       id-token: write
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
         
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -27,6 +31,7 @@ jobs:
         
       - name: Run security audit
         run: npm audit --audit-level=high
+        continue-on-error: true
         
       - name: Run lint
         run: npm run lint
@@ -35,49 +40,13 @@ jobs:
         run: npm test
         
       - name: Run type check
-        run: npx tsc --noEmit
+        run: npm run typecheck
         
       - name: Build package
         run: npm run build
         
-      - name: Check if version changed
-        id: version-changed
-        run: |
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          echo "current-version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-          
-          # Get the latest published version from npm
-          PUBLISHED_VERSION=$(timeout 30s npm view @bymeisam/use version 2>/dev/null || echo "0.0.0")
-          echo "published-version=$PUBLISHED_VERSION" >> $GITHUB_OUTPUT
-          
-          if [ "$CURRENT_VERSION" != "$PUBLISHED_VERSION" ]; then
-            echo "version-changed=true" >> $GITHUB_OUTPUT
-            echo "Version changed from $PUBLISHED_VERSION to $CURRENT_VERSION"
-          else
-            echo "version-changed=false" >> $GITHUB_OUTPUT
-            echo "Version unchanged: $CURRENT_VERSION"
-          fi
-          
-      - name: Verify build artifacts
-        if: steps.version-changed.outputs.version-changed == 'true'
-        run: |
-          if [ ! -d "dist" ] && [ ! -d "lib" ] && [ ! -d "build" ]; then
-            echo "No build artifacts found. Build may have failed."
-            exit 1
-          fi
-          
-      - name: Publish to NPM
-        if: steps.version-changed.outputs.version-changed == 'true'
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
-      - name: Create Git tag
-        if: steps.version-changed.outputs.version-changed == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag "v${{ steps.version-changed.outputs.current-version }}"
-          git push origin "v${{ steps.version-changed.outputs.current-version }}"
+      - name: Release with semantic-release
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

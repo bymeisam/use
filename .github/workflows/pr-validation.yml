@@ -1,0 +1,69 @@
+name: PR Title Validation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate-title:
+    name: Validate PR Title
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Validate PR Title
+        run: node .github/scripts/validate-pr-title.js "${{ github.event.pull_request.title }}"
+        
+      - name: Comment on PR (if validation fails)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const title = context.payload.pull_request.title;
+            
+            const comment = `## ❌ PR Title Validation Failed
+            
+            **Current title:** \`${title}\`
+            
+            Your PR title doesn't follow the conventional commit format. Please update it to follow this pattern:
+            
+            \`\`\`
+            <type>[optional scope]: <description>
+            \`\`\`
+            
+            ### Valid Types:
+            - \`feat:\` - New feature (minor version bump)
+            - \`fix:\` - Bug fix (patch version bump) 
+            - \`feat!:\` or \`fix!:\` - Breaking change (major version bump)
+            - \`docs:\` - Documentation only
+            - \`style:\` - Formatting, whitespace
+            - \`refactor:\` - Code refactoring
+            - \`test:\` - Adding tests
+            - \`chore:\` - Maintenance tasks
+            - \`ci:\` - CI/CD changes
+            
+            ### Examples:
+            - \`feat: add useToggle hook\`
+            - \`fix: resolve memory leak in useEffect\`
+            - \`feat!: change useCounter API (breaking change)\`
+            - \`docs: update README examples\`
+            - \`chore(deps): update typescript to v5.1\`
+            
+            The PR title will be used as the commit message when squash-merging, which determines the version bump for automatic releases.
+            
+            📖 [Learn more about Conventional Commits](https://www.conventionalcommits.org/)`;
+            
+            github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

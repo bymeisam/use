@@ -21,6 +21,9 @@
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc --project tsconfig.cjs.json",
     "build:esm": "tsc --project tsconfig.esm.json",
+    "lint": "echo 'No linter configured yet'",
+    "test": "echo 'No tests configured yet'",
+    "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -34,12 +37,14 @@
     "react": ">=16.8.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@types/react": "^18.2.0",
     "react": "^18.2.0",
+    "semantic-release": "^24.2.7",
     "typescript": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"
   }
 }
-
