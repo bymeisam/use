@@ -7,9 +7,14 @@
   "types": "dist/esm/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/esm/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "types": "./dist/esm/*/index.d.ts",
+      "import": "./dist/esm/*/index.js",
+      "require": "./dist/cjs/*/index.js"
     }
   },
   "sideEffects": false,
@@ -22,7 +27,9 @@
     "build:cjs": "tsc --project tsconfig.cjs.json",
     "build:esm": "tsc --project tsconfig.esm.json",
     "lint": "echo 'No linter configured yet'",
-    "test": "echo 'No tests configured yet'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
@@ -34,15 +41,20 @@
   "author": "Meisam",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=19.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@types/react": "^18.2.0",
-    "react": "^18.2.0",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.1.12",
+    "happy-dom": "^18.0.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "semantic-release": "^24.2.7",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4"
   },
   "publishConfig": {
     "access": "public"
