@@ -1,0 +1,46 @@
+name: Shared CI
+
+on:
+  workflow_call:
+
+jobs:
+  ci:
+    name: Test, Lint, Typecheck & Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run security audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+        
+      - name: Run lint
+        run: npm run lint
+        
+      - name: Run tests
+        run: npm test
+        
+      - name: Run type check
+        run: npm run typecheck
+        
+      - name: Build package
+        run: npm run build
+        
+      - name: Verify build artifacts
+        run: |
+          if [ ! -d "dist/cjs" ] || [ ! -d "dist/esm" ]; then
+            echo "Build artifacts missing. Build may have failed."
+            exit 1
+          fi
+          echo "✅ Build artifacts verified"

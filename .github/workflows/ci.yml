@@ -1,8 +1,8 @@
-name: PR Title Validation
+name: CI
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    branches: [main]
 
 jobs:
   validate-title:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           
       - name: Validate PR Title
         run: node .github/scripts/validate-pr-title.js "${{ github.event.pull_request.title }}"
@@ -67,3 +67,7 @@ jobs:
               repo: context.repo.repo,
               body: comment
             });
+
+  ci:
+    name: Run CI Checks
+    uses: ./.github/workflows/shared-ci.yml
