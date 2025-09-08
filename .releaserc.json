@@ -15,7 +15,10 @@
       "@semantic-release/github",
       {
         "assets": [
-          "dist/**"
+          {
+            "path": "*.tgz",
+            "label": "NPM Package"
+          }
         ]
       }
     ],
