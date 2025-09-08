@@ -1,18 +1,19 @@
 import { renderHook, act } from '@testing-library/react'
+import { vi } from 'vitest'
 import { useLocalStorage } from './useLocalStorage'
 
 const mockLocalStorage = (() => {
   let store: Record<string, string> = {}
 
   return {
-    getItem: jest.fn((key: string) => store[key] || null),
-    setItem: jest.fn((key: string, value: string) => {
+    getItem: vi.fn((key: string) => store[key] || null),
+    setItem: vi.fn((key: string, value: string) => {
       store[key] = value
     }),
-    removeItem: jest.fn((key: string) => {
+    removeItem: vi.fn((key: string) => {
       delete store[key]
     }),
-    clear: jest.fn(() => {
+    clear: vi.fn(() => {
       store = {}
     }),
   }
@@ -25,7 +26,7 @@ Object.defineProperty(window, 'localStorage', {
 describe('useLocalStorage', () => {
   beforeEach(() => {
     mockLocalStorage.clear()
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('should return default value when no stored value exists', () => {
@@ -79,7 +80,7 @@ describe('useLocalStorage', () => {
 
   it('should handle JSON parsing errors gracefully', () => {
     mockLocalStorage.setItem('test-key', 'invalid-json')
-    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     const { result } = renderHook(() => useLocalStorage('test-key', 'default'))
 
@@ -93,7 +94,7 @@ describe('useLocalStorage', () => {
   })
 
   it('should handle localStorage setItem errors gracefully', () => {
-    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     mockLocalStorage.setItem.mockImplementation(() => {
       throw new Error('Storage quota exceeded')
     })
