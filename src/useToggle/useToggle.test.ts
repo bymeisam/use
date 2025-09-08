@@ -45,4 +45,67 @@ describe('useToggle', () => {
     
     expect(firstToggle).toBe(secondToggle)
   })
+
+  describe('Custom values mode', () => {
+    it('should toggle between custom string values', () => {
+      const { result } = renderHook(() => useToggle('light', 'dark'))
+      
+      expect(result.current[0]).toBe('light')
+      
+      act(() => {
+        result.current[1]()
+      })
+      expect(result.current[0]).toBe('dark')
+      
+      act(() => {
+        result.current[1]()
+      })
+      expect(result.current[0]).toBe('light')
+    })
+
+    it('should toggle between custom number values', () => {
+      const { result } = renderHook(() => useToggle(0, 1))
+      
+      expect(result.current[0]).toBe(0)
+      
+      act(() => {
+        result.current[1]()
+      })
+      expect(result.current[0]).toBe(1)
+    })
+
+    it('should toggle between empty string and value', () => {
+      const { result } = renderHook(() => useToggle('', 'active'))
+      
+      expect(result.current[0]).toBe('')
+      
+      act(() => {
+        result.current[1]()
+      })
+      expect(result.current[0]).toBe('active')
+    })
+
+    it('should toggle between object values', () => {
+      const obj1 = { theme: 'light' }
+      const obj2 = { theme: 'dark' }
+      const { result } = renderHook(() => useToggle(obj1, obj2))
+      
+      expect(result.current[0]).toBe(obj1)
+      
+      act(() => {
+        result.current[1]()
+      })
+      expect(result.current[0]).toBe(obj2)
+    })
+
+    it('should maintain stable toggle function reference with custom values', () => {
+      const { result, rerender } = renderHook(() => useToggle('on', 'off'))
+      const firstToggle = result.current[1]
+      
+      rerender()
+      const secondToggle = result.current[1]
+      
+      expect(firstToggle).toBe(secondToggle)
+    })
+  })
 })

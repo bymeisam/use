@@ -36,6 +36,15 @@ describe("useLocalStorage", () => {
     expect(value).toBe("default");
   });
 
+  it("should save default value to localStorage when no stored value exists", () => {
+    renderHook(() => useLocalStorage("test-key", "default"));
+
+    expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+      "test-key",
+      JSON.stringify("default")
+    );
+  });
+
   it("should return stored value when it exists", () => {
     mockLocalStorage.setItem("test-key", JSON.stringify("stored-value"));
 
