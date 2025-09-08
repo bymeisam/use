@@ -4,7 +4,7 @@ This project uses [semantic-release](https://github.com/semantic-release/semanti
 
 ## How It Works
 
-When you push commits to the `main` branch, the GitHub Action will:
+When you push commits to the `master` branch, the GitHub Action will:
 
 1. **Analyze commit messages** using conventional commit format
 2. **Determine version bump** (patch, minor, major)
@@ -81,8 +81,8 @@ git commit -m "feat: add useInterval hook"
 
 1. **Create feature branch**: `git checkout -b feature/new-hook`
 2. **Make changes** with conventional commits
-3. **Create pull request** to `main`
-4. **Merge to main** - this triggers automatic release
+3. **Create pull request** to `master`
+4. **Merge to master** - this triggers automatic release
 5. **Check GitHub releases** - new version will be published automatically
 
 ## Manual Release
@@ -92,13 +92,13 @@ If needed, you can trigger a release manually:
 1. Go to **Actions** tab in GitHub
 2. Select **Publish to NPM** workflow  
 3. Click **Run workflow** button
-4. Choose the `main` branch and run
+4. Choose the `master` branch and run
 
 ## Configuration
 
 The versioning configuration is in `.releaserc.json`:
 
-- **Branches**: Only `main` triggers releases
+- **Branches**: Only `master` triggers releases
 - **Plugins**: Handles analysis, changelog, npm publishing, GitHub releases
 - **Assets**: Updates `package.json` and `CHANGELOG.md`
 
