@@ -1,0 +1,61 @@
+name: Test NPM Publish
+
+on:
+  workflow_dispatch:  # Manual trigger only for testing
+  push:
+    branches: [test-npm]  # Only on test branch to avoid accidental publishes
+
+jobs:
+  test-npm-token:
+    name: Test NPM Token & Publish
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Debug NPM Token
+        run: node .github/scripts/debug-npm-token.js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        
+      - name: Build package
+        run: npm run build
+        
+      - name: Test NPM Authentication
+        run: |
+          echo "Testing npm whoami..."
+          npm whoami
+          echo "Testing package access..."
+          npm access get status @bymeisam/use || echo "Package may not exist yet"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Dry Run Publish (Safe)
+        run: |
+          echo "Running dry-run publish to test without actually publishing..."
+          npm publish --dry-run
+          echo "Dry run completed successfully!"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Actual Publish (ONLY if dry run succeeds)
+        if: github.ref == 'refs/heads/test-npm'
+        run: |
+          echo "Publishing to npm..."
+          npm publish
+          echo "Published successfully!"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
