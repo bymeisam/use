@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/bymeisam/use/compare/v1.1.0...v1.1.1) (2025-09-12)
+
+
+### Bug Fixes
+
+* export types for geolocation ([#14](https://github.com/bymeisam/use/issues/14)) ([9042a4b](https://github.com/bymeisam/use/commit/9042a4b90f271b74eb98a49575fbb0a5a9d8672a))
+
 # [1.1.0](https://github.com/bymeisam/use/compare/v1.0.1...v1.1.0) (2025-09-12)
 
 
