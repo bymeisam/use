@@ -1,33 +1,33 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-export function useToggle(): [boolean, () => void];
-export function useToggle(initialValue: boolean): [boolean, () => void];
-export function useToggle<T>(defaultValue: T, alternateValue: T): [T, () => void];
-export function useToggle<T>(
-  defaultValue?: boolean | T,
-  alternateValue?: T
-): [boolean | T, () => void] {
-  // Boolean mode
-  if (arguments.length <= 1) {
-    const [value, setValue] = useState<boolean>(
-      defaultValue as boolean ?? false
-    );
-
-    const toggle = useCallback(() => {
-      setValue(prev => !prev);
-    }, []);
-
-    return [value, toggle] as const;
+function useToggle(defaultValue: boolean): [boolean, () => void, () => void];
+function useToggle<T>(
+  defaultValue: T,
+  alternateValue: T,
+): [T, () => void, () => void];
+function useToggle<T>(
+  defaultValue: T,
+  alternateValue?: T,
+): [T, () => void, () => void] {
+  if (alternateValue === undefined && typeof defaultValue === "boolean") {
+    alternateValue = !defaultValue as T;
   }
 
-  // Custom values mode
-  const [value, setValue] = useState<T>(defaultValue as T);
+  if (alternateValue === undefined) {
+    throw new Error("useToggle requires two arguments for non-boolean values");
+  }
+
+  const [state, setState] = useState(true);
 
   const toggle = useCallback(() => {
-    setValue(prev => 
-      prev === defaultValue ? alternateValue! : defaultValue as T
-    );
-  }, [defaultValue, alternateValue]);
+    setState((prev) => !prev);
+  }, [setState]);
 
-  return [value, toggle] as const;
+  const reset = useCallback(() => {
+    setState(true);
+  }, [setState]);
+  const value = state ? defaultValue : alternateValue;
+  return [value, toggle, reset];
 }
+
+export { useToggle };
