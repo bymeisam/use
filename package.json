@@ -1,6 +1,6 @@
 {
   "name": "@bymeisam/use",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "description": "A simple React hooks library",
   "main": "dist/cjs/index.js",

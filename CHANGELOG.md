@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/bymeisam/use/compare/v1.0.1...v1.1.0) (2025-09-12)
+
+
+### Features
+
+* add Uselocalstorage ([#13](https://github.com/bymeisam/use/issues/13)) ([bfc5cb6](https://github.com/bymeisam/use/commit/bfc5cb66e5adacb1b2a9bc22b0cba517d30e1b04))
+
 ## [1.0.1](https://github.com/bymeisam/use/compare/v1.0.0...v1.0.1) (2025-09-08)
 
 
