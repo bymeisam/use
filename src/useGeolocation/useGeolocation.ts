@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 // Define interfaces that match the native browser types
-interface GeolocationCoordinates {
+export interface GeolocationCoordinates {
   readonly accuracy: number;
   readonly altitude: number | null;
   readonly altitudeAccuracy: number | null;
@@ -11,12 +11,12 @@ interface GeolocationCoordinates {
   readonly speed: number | null;
 }
 
-interface GeolocationPosition {
+export interface GeolocationPosition {
   readonly coords: GeolocationCoordinates;
   readonly timestamp: number;
 }
 
-interface PositionOptions {
+export interface PositionOptions {
   enableHighAccuracy?: boolean;
   maximumAge?: number;
   timeout?: number;
@@ -55,7 +55,7 @@ export function useGeolocation(
   const handleError = useCallback((err: string | { message: string }) => {
     setState((prev) => ({
       ...prev,
-      error: typeof err === 'string' ? err : err.message,
+      error: typeof err === "string" ? err : err.message,
       loading: false,
     }));
   }, []);
@@ -130,4 +130,3 @@ export function useGeolocation(
     endWatch,
   };
 }
-
