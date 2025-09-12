@@ -6,6 +6,7 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
+  "repository": "github:bymeisam/use",
   "exports": {
     ".": {
       "types": "./dist/esm/index.d.ts",

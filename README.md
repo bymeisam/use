@@ -1,6 +1,6 @@
 # @bymeisam/use
 
-A simple React hooks library.
+A collection of reusable React hooks for common functionality.
 
 ## Installation
 
@@ -8,33 +8,92 @@ A simple React hooks library.
 npm install @bymeisam/use
 ```
 
-## Usage
+## Hooks
 
-```jsx
+### useToggle
+A hook for toggling between boolean values or custom values with reset functionality.
+
+**API:** `useToggle(defaultValue, alternateValue?) => [value, toggle, reset]`
+
+**Boolean mode:**
+```tsx
 import { useToggle } from '@bymeisam/use';
 
-function App() {
-  const [isVisible, toggle] = useToggle(false);
+const [isOn, toggle, reset] = useToggle(true);
+// isOn: true, toggle to false, reset back to true
 
+function App() {
   return (
     <div>
-      <button onClick={toggle}>
-        {isVisible ? 'Hide' : 'Show'}
-      </button>
-      {isVisible && <p>Content is visible!</p>}
+      <p>Status: {isOn ? 'ON' : 'OFF'}</p>
+      <button onClick={toggle}>Toggle</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
 ```
 
-## API
+**Custom values mode:**
+```tsx
+const [theme, toggleTheme, resetTheme] = useToggle('light', 'dark');
+// theme: 'light', toggleTheme to 'dark', resetTheme back to 'light'
 
-### useToggle(initialValue?)
+const [status, toggleStatus, resetStatus] = useToggle('active', 'inactive');
+```
 
-Returns a boolean state and a toggle function.
+**Returns:**
+- `value`: Current value (T)
+- `toggle`: Function to toggle between values
+- `reset`: Function to reset to default value
 
-- `initialValue` (boolean, optional): Initial state value. Default: `false`
-- Returns: `[value, toggle]` tuple
+**Error handling:**
+- Throws error if non-boolean value is provided without alternate value
+
+### useGeolocation
+A hook for accessing browser geolocation with proper error handling.
+
+**API:** `useGeolocation(options?) => { position, error, loading, getCurrentPosition, startWatch, endWatch }`
+
+```tsx
+import { useGeolocation } from '@bymeisam/use';
+
+const { position, error, loading, getCurrentPosition, startWatch, endWatch } = useGeolocation({
+  enableHighAccuracy: true,
+  timeout: 10000
+});
+
+// Get current position once
+const handleGetLocation = () => {
+  getCurrentPosition();
+};
+
+// Start continuous tracking
+const handleStartTracking = () => {
+  startWatch();
+};
+
+// Stop tracking
+const handleStopTracking = () => {
+  endWatch();
+};
+```
+
+**Returns:**
+- `position`: Current position object with coords and timestamp
+- `error`: Error string if geolocation fails
+- `loading`: Boolean indicating if request is in progress
+- `getCurrentPosition`: Function to get position once
+- `startWatch`: Function to start continuous position tracking
+- `endWatch`: Function to stop position tracking
+
+### useLocalStorage
+A hook for managing localStorage state with React.
+
+```tsx
+import { useLocalStorage } from '@bymeisam/use';
+
+const [value, setValue] = useLocalStorage('key', 'defaultValue');
+```
 
 ## License
 
