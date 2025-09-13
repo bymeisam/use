@@ -50,10 +50,10 @@ describe('useGeolocation', () => {
   })
 
   describe('Initial state', () => {
-    it('should initialize with null position, no error, and not loading', () => {
+    it('should initialize with null location, no error, and not loading', () => {
       const { result } = renderHook(() => useGeolocation())
-      
-      expect(result.current.position).toBeNull()
+
+      expect(result.current.location).toBeNull()
       expect(result.current.error).toBeNull()
       expect(result.current.loading).toBe(false)
     })
@@ -82,23 +82,23 @@ describe('useGeolocation', () => {
       expect(result.current.loading).toBe(true)
     })
 
-    it('should update position data on success', async () => {
+    it('should update location data on success', async () => {
       const { result } = renderHook(() => useGeolocation())
-      
+
       mockGetCurrentPosition.mockImplementation((success) => {
         globalThis.setTimeout(() => success(mockPosition), 0)
       })
-      
+
       act(() => {
         result.current.getCurrentPosition()
       })
-      
+
       // Wait for the mock to execute
       await act(async () => {
         await new Promise(resolve => globalThis.setTimeout(resolve, 1))
       })
-      
-      expect(result.current.position).toEqual(mockPosition)
+
+      expect(result.current.location).toEqual(mockPosition)
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toBeNull()
     })
@@ -218,7 +218,7 @@ describe('useGeolocation', () => {
         }
       })
       
-      expect(result.current.position).toEqual(mockPosition)
+      expect(result.current.location).toEqual(mockPosition)
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toBeNull()
     })
