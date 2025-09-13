@@ -8,4 +8,5 @@ export {
   type GeolocationPosition,
   type PositionOptions,
 } from "./useGeolocation";
+export { useClickOutside } from "./useClickOutside";
 

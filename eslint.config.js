@@ -23,6 +23,9 @@ export default [
         localStorage: "readonly",
         StorageEvent: "readonly",
         console: "readonly",
+        HTMLElement: "readonly",
+        MouseEvent: "readonly",
+        Node: "readonly",
       },
     },
     plugins: {
@@ -77,6 +80,9 @@ export default [
         localStorage: "readonly",
         StorageEvent: "readonly",
         console: "readonly",
+        HTMLElement: "readonly",
+        MouseEvent: "readonly",
+        Node: "readonly",
       },
     },
     rules: {
