@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/bymeisam/use/compare/v1.1.1...v1.1.2) (2025-09-13)
+
+
+### Bug Fixes
+
+* rename positon to location ([#15](https://github.com/bymeisam/use/issues/15)) ([f7f899d](https://github.com/bymeisam/use/commit/f7f899d07e8eec2ce78ffa8c9c491f35fe5165e6))
+
 ## [1.1.1](https://github.com/bymeisam/use/compare/v1.1.0...v1.1.1) (2025-09-12)
 
 
