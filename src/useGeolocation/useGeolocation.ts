@@ -23,7 +23,7 @@ export interface PositionOptions {
 }
 
 export interface GeolocationState {
-  position: GeolocationPosition | null;
+  location: GeolocationPosition | null;
   error: string | null;
   loading: boolean;
 }
@@ -38,7 +38,7 @@ export function useGeolocation(
   options?: PositionOptions,
 ): UseGeolocationReturn {
   const [state, setState] = useState<GeolocationState>({
-    position: null,
+    location: null,
     error: null,
     loading: false,
   });
@@ -46,7 +46,7 @@ export function useGeolocation(
 
   const handleSuccess = useCallback((position: GeolocationPosition) => {
     setState({
-      position,
+      location: position,
       error: null,
       loading: false,
     });
