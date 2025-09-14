@@ -49,20 +49,87 @@ const [status, toggleStatus, resetStatus] = useToggle('active', 'inactive');
 **Error handling:**
 - Throws error if non-boolean value is provided without alternate value
 
+### useFocus
+A hook for managing focus state and programmatically controlling focus on HTML elements.
+
+**API:** `useFocus<T>(options?) => { ref, focus, blur, isFocused }`
+
+```tsx
+import { useFocus } from '@bymeisam/use';
+
+// Basic usage
+const { ref, focus, blur, isFocused } = useFocus<HTMLInputElement>();
+
+// With auto focus
+const { ref, focus, blur, isFocused } = useFocus<HTMLInputElement>({
+  autoFocus: true
+});
+
+function App() {
+  return (
+    <div>
+      <input ref={ref} placeholder="Focus me" />
+      <button onClick={focus}>Focus Input</button>
+      <button onClick={blur}>Blur Input</button>
+      <p>Input is {isFocused ? 'focused' : 'not focused'}</p>
+    </div>
+  );
+}
+```
+
+**Returns:**
+- `ref`: Ref to attach to the element you want to manage
+- `focus`: Function to programmatically focus the element
+- `blur`: Function to programmatically blur the element
+- `isFocused`: Boolean indicating if the element is currently focused
+
+### useClickOutside
+A hook that detects clicks outside of a specified element and triggers a callback.
+
+**API:** `useClickOutside<T>(callback) => RefObject<T | null>`
+
+```tsx
+import React, { useState } from 'react';
+import { useClickOutside } from '@bymeisam/use';
+
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useClickOutside<HTMLDivElement>(() => {
+    setIsOpen(false);
+  });
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        Toggle Dropdown
+      </button>
+      {isOpen && (
+        <div ref={ref}>
+          <p>Click outside to close</p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+**Returns:**
+- `RefObject<T | null>`: Ref to attach to the element you want to monitor
+
 ### useGeolocation
 A hook for accessing browser geolocation with proper error handling.
 
-**API:** `useGeolocation(options?) => { position, error, loading, getCurrentPosition, startWatch, endWatch }`
+**API:** `useGeolocation(options?) => { location, error, loading, getCurrentPosition, startWatch, endWatch }`
 
 ```tsx
 import { useGeolocation } from '@bymeisam/use';
 
-const { position, error, loading, getCurrentPosition, startWatch, endWatch } = useGeolocation({
+const { location, error, loading, getCurrentPosition, startWatch, endWatch } = useGeolocation({
   enableHighAccuracy: true,
   timeout: 10000
 });
 
-// Get current position once
+// Get current location once
 const handleGetLocation = () => {
   getCurrentPosition();
 };
@@ -79,12 +146,12 @@ const handleStopTracking = () => {
 ```
 
 **Returns:**
-- `position`: Current position object with coords and timestamp
+- `location`: Current location object with coords and timestamp
 - `error`: Error string if geolocation fails
 - `loading`: Boolean indicating if request is in progress
-- `getCurrentPosition`: Function to get position once
-- `startWatch`: Function to start continuous position tracking
-- `endWatch`: Function to stop position tracking
+- `getCurrentPosition`: Function to get location once
+- `startWatch`: Function to start continuous location tracking
+- `endWatch`: Function to stop location tracking
 
 ### useLocalStorage
 A hook for managing localStorage state with React.
