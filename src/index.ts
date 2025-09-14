@@ -10,4 +10,5 @@ export {
 } from "./useGeolocation";
 export { useClickOutside } from "./useClickOutside";
 export { useDebounce } from "./useDebounce";
+export { useFocus, type UseFocusReturn } from "./useFocus";
 
