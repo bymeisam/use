@@ -30,10 +30,13 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
     }
   }, []);
 
-  // Set up event listeners (only when element changes)
+  // Check for element changes and set up listeners on every render
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element) {
+      setIsFocused(false);
+      return;
+    }
 
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
@@ -41,22 +44,20 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
     element.addEventListener("focus", handleFocus);
     element.addEventListener("blur", handleBlur);
 
-    // Set initial focus state
-    setIsFocused(document.activeElement === element);
+    // Set initial focus state based on current active element
+    const isCurrentlyFocused = document.activeElement === element;
+    setIsFocused(isCurrentlyFocused);
+
+    // Handle auto focus when element is attached and not already focused
+    if (autoFocus && !isCurrentlyFocused) {
+      element.focus();
+    }
 
     return () => {
       element.removeEventListener("focus", handleFocus);
       element.removeEventListener("blur", handleBlur);
     };
-  }, []);
-
-  // Handle auto focus (separate effect)
-  useEffect(() => {
-    const element = ref.current;
-    if (!element || !autoFocus) return;
-
-    element.focus();
-  }, [autoFocus]);
+  }); // No dependency array - run on every render to catch ref changes
 
   return {
     ref,
