@@ -3,6 +3,7 @@ import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
@@ -18,16 +19,8 @@ export default [
         },
       },
       globals: {
-        window: "readonly",
-        document: "readonly",
-        localStorage: "readonly",
-        StorageEvent: "readonly",
-        console: "readonly",
-        HTMLElement: "readonly",
-        MouseEvent: "readonly",
-        Node: "readonly",
-        setTimeout: "readonly",
-        clearTimeout: "readonly",
+        ...globals.browser,
+        ...globals.es2021,
       },
     },
     plugins: {
@@ -67,26 +60,9 @@ export default [
     files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
     languageOptions: {
       globals: {
-        describe: "readonly",
-        it: "readonly",
-        expect: "readonly",
-        beforeEach: "readonly",
-        afterEach: "readonly",
-        beforeAll: "readonly",
-        afterAll: "readonly",
-        jest: "readonly",
-        vi: "readonly",
-        vitest: "readonly",
-        window: "readonly",
-        document: "readonly",
-        localStorage: "readonly",
-        StorageEvent: "readonly",
-        console: "readonly",
-        HTMLElement: "readonly",
-        MouseEvent: "readonly",
-        Node: "readonly",
-        setTimeout: "readonly",
-        clearTimeout: "readonly",
+        ...globals.jest,
+        ...globals.browser,
+        ...globals.es2022,
       },
     },
     rules: {

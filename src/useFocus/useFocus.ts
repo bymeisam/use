@@ -12,7 +12,7 @@ export interface UseFocusReturn<T extends HTMLElement = HTMLElement> {
 }
 
 export function useFocus<T extends HTMLElement = HTMLElement>(
-  options: UseFocusOptions = {}
+  options: UseFocusOptions = {},
 ): UseFocusReturn<T> {
   const { autoFocus = false } = options;
   const ref = useRef<T>(null);
@@ -38,17 +38,17 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
 
-    element.addEventListener('focus', handleFocus);
-    element.addEventListener('blur', handleBlur);
+    element.addEventListener("focus", handleFocus);
+    element.addEventListener("blur", handleBlur);
 
     // Set initial focus state
     setIsFocused(document.activeElement === element);
 
     return () => {
-      element.removeEventListener('focus', handleFocus);
-      element.removeEventListener('blur', handleBlur);
+      element.removeEventListener("focus", handleFocus);
+      element.removeEventListener("blur", handleBlur);
     };
-  }, [ref.current]);
+  }, []);
 
   // Handle auto focus (separate effect)
   useEffect(() => {
@@ -56,7 +56,7 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
     if (!element || !autoFocus) return;
 
     element.focus();
-  }, [ref.current, autoFocus]);
+  }, [autoFocus]);
 
   return {
     ref,
@@ -65,3 +65,4 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
     isFocused,
   };
 }
+
