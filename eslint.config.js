@@ -26,6 +26,8 @@ export default [
         HTMLElement: "readonly",
         MouseEvent: "readonly",
         Node: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
       },
     },
     plugins: {
@@ -83,6 +85,8 @@ export default [
         HTMLElement: "readonly",
         MouseEvent: "readonly",
         Node: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
       },
     },
     rules: {
