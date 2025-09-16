@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/bymeisam/use/compare/v1.2.0...v1.3.0) (2025-09-16)
+
+
+### Features
+
+* add useDebouce ([#18](https://github.com/bymeisam/use/issues/18)) ([a84c362](https://github.com/bymeisam/use/commit/a84c362a0abf0310b3ee5ec2fd86563f0811f15a))
+
 # [1.2.0](https://github.com/bymeisam/use/compare/v1.1.2...v1.2.0) (2025-09-13)
 
 
