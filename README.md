@@ -95,6 +95,78 @@ import { useLocalStorage } from '@bymeisam/use';
 const [value, setValue] = useLocalStorage('key', 'defaultValue');
 ```
 
+### useClickOutside
+A hook that detects clicks outside of an element, useful for closing modals and dropdowns.
+
+**API:** `useClickOutside(callback) => RefObject`
+
+```tsx
+import { useClickOutside } from '@bymeisam/use';
+
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useClickOutside(() => setIsOpen(false));
+
+  return (
+    <div ref={dropdownRef}>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        Toggle Dropdown
+      </button>
+      {isOpen && (
+        <div className="dropdown-menu">
+          <p>Dropdown content</p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+**Parameters:**
+- `callback`: Function called when click occurs outside the element
+
+**Returns:**
+- `RefObject`: Ref to attach to the element you want to detect outside clicks for
+
+### useDebounce
+A hook that debounces value changes, perfect for search inputs and performance optimization.
+
+**API:** `useDebounce(initialValue, delay) => [debouncedValue, setValue, currentValue]`
+
+```tsx
+import { useDebounce } from '@bymeisam/use';
+
+function SearchInput() {
+  const [debouncedSearch, setSearch, currentSearch] = useDebounce('', 300);
+
+  // API call only happens after user stops typing for 300ms
+  useEffect(() => {
+    if (debouncedSearch) {
+      searchAPI(debouncedSearch);
+    }
+  }, [debouncedSearch]);
+
+  return (
+    <input
+      value={currentSearch}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+**Returns:**
+- `debouncedValue`: Value updated after delay period
+- `setValue`: Function to update the current value immediately
+- `currentValue`: Current value (updates immediately)
+
+**Use cases:**
+- Search inputs with API calls
+- Form validation after user stops typing
+- Auto-save functionality
+- Performance optimization for expensive operations
+
 ## License
 
 MIT
