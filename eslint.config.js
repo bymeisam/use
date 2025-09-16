@@ -21,6 +21,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.es2021,
+        ...globals.vitest,
       },
     },
     plugins: {
