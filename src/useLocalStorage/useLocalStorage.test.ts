@@ -41,7 +41,7 @@ describe("useLocalStorage", () => {
 
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
       "test-key",
-      JSON.stringify("default")
+      JSON.stringify("default"),
     );
   });
 
@@ -63,7 +63,7 @@ describe("useLocalStorage", () => {
 
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
       "test-key",
-      JSON.stringify("new-value")
+      JSON.stringify("new-value"),
     );
     expect(result.current[0]).toBe("new-value");
   });
@@ -78,7 +78,7 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe(1);
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
       "test-key",
-      JSON.stringify(1)
+      JSON.stringify(1),
     );
   });
 
@@ -106,7 +106,7 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe("default");
     expect(consoleSpy).toHaveBeenCalledWith(
       'Error reading localStorage key "test-key":',
-      expect.any(Error)
+      expect.any(Error),
     );
 
     consoleSpy.mockRestore();
@@ -126,7 +126,7 @@ describe("useLocalStorage", () => {
 
     expect(consoleSpy).toHaveBeenCalledWith(
       'Error setting localStorage key "test-key":',
-      expect.any(Error)
+      expect.any(Error),
     );
 
     consoleSpy.mockRestore();
@@ -165,7 +165,7 @@ describe("useLocalStorage", () => {
 
   it("should maintain stable setter function reference", () => {
     const { result, rerender } = renderHook(() =>
-      useLocalStorage("test-key", "initial")
+      useLocalStorage("test-key", "initial"),
     );
     const firstSetter = result.current[1];
 
