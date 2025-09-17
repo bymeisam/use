@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/bymeisam/use/compare/v1.4.1...v1.4.2) (2025-09-17)
+
+
+### Bug Fixes
+
+* another minor update ([#20](https://github.com/bymeisam/use/issues/20)) ([65bcb90](https://github.com/bymeisam/use/commit/65bcb90f1c2bde0b11fef510fe9155244a855f6a))
+
 ## [1.4.1](https://github.com/bymeisam/use/compare/v1.4.0...v1.4.1) (2025-09-17)
 
 
