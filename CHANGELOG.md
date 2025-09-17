@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/bymeisam/use/compare/v1.4.0...v1.4.1) (2025-09-17)
+
+
+### Bug Fixes
+
+* update tsconfig to expose types ([#19](https://github.com/bymeisam/use/issues/19)) ([0faa514](https://github.com/bymeisam/use/commit/0faa5143fd96308f77fa6726e1e2818cd6f54f2d))
+
 # [1.4.0](https://github.com/bymeisam/use/compare/v1.3.0...v1.4.0) (2025-09-17)
 
 
