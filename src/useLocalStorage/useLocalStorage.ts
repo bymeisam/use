@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-type SetValue<T> = T | ((prevValue: T) => T);
+export type SetValue<T> = T | ((prevValue: T) => T);
 const getFromLocalStorage = <T>(key: string, defaultValue: T) => {
   if (typeof window === "undefined") {
     return defaultValue;

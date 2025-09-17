@@ -1,1 +1,1 @@
-export { useLocalStorage } from './useLocalStorage';
+export { useLocalStorage, type SetValue } from './useLocalStorage';
