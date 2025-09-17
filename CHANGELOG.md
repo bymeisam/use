@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/bymeisam/use/compare/v1.3.0...v1.4.0) (2025-09-17)
+
+
+### Features
+
+* add useFocuse ([#17](https://github.com/bymeisam/use/issues/17)) ([27bf43b](https://github.com/bymeisam/use/commit/27bf43b4542baa19c4b747d3e6c2f761d2464bf3))
+
 # [1.3.0](https://github.com/bymeisam/use/compare/v1.2.0...v1.3.0) (2025-09-16)
 
 
